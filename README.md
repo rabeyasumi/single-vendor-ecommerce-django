@@ -6,7 +6,7 @@ A simple and responsive single-vendor e-commerce website built with Django, HTML
 
 Watch the project video:
 
-[▶ Watch on YouTube](https://www.youtube.com/watch?v=ad2zEBUP2eQ)
+[▶ Watch on YouTube](https://youtu.be/jnTNK2EhKqk)
 
 
 ## Project Overview
