@@ -271,7 +271,7 @@ The source code, templates, static files, migrations, dependency list, and docum
 
 **Your Name**
 
-GitHub: https://github.com/YOUR-USERNAME
+GitHub: https://github.com/rabeyasumi
 
 ---
 
