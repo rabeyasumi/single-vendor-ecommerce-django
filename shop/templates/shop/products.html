@@ -1,0 +1,76 @@
+
+{% extends 'shop/base.html' %}
+
+{% block title %}সব বই | বইঘর{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <h2 class="mb-4">আমাদের সব বই</h2>
+
+    <form method="GET" action="{% url 'products' %}" class="row g-2 mb-4">
+        <div class="col-md-6">
+            <input
+                type="search"
+                name="q"
+                class="form-control"
+                placeholder="বইয়ের নাম লিখে খুঁজুন..."
+                value="{{ search_query }}"
+            >
+        </div>
+
+        <div class="col-md-4">
+            <select name="category" class="form-select">
+                <option value="">সব ক্যাটাগরি</option>
+
+                {% for category in categories %}
+                    <option value="{{ category }}"
+                        {% if selected_category == category %}selected{% endif %}>
+                        {{ category }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="col-md-2">
+            <button type="submit" class="btn btn-primary w-100">
+                খুঁজুন
+            </button>
+        </div>
+    </form>
+
+
+    <div class="row g-4">
+        {% if not products %}
+            <p class="text-muted">দুঃখিত, কোনো বই পাওয়া যায়নি।</p>
+        {% endif %}
+        {% for product in products %}
+        <div class="col-6 col-md-4 col-lg-3">
+            <div class="card product-card">
+                {% if product.image %}
+                    <img src="{{ product.image.url }}"
+                         class="card-img-top product-image"
+                         alt="{{ product.name }}">
+                {% else %}
+                    <div class="product-image d-flex align-items-center justify-content-center">
+                        <span>ছবি নেই</span>
+                    </div>
+                {% endif %}
+
+                <div class="card-body">
+                    <h5 class="card-title">{{ product.name }}</h5>
+                    <p class="price">৳{{ product.price }}</p>
+                    <p>ক্যাটাগরি: {{ product.category }}</p>
+
+                    <a href="{% url 'product_detail' product.pk %}"
+                       class="btn btn-outline-primary btn-sm">
+                        বিস্তারিত দেখুন
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p>এখনো কোনো বই যোগ করা হয়নি।</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

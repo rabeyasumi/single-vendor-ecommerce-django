@@ -1,0 +1,56 @@
+
+{% extends 'shop/base.html' %}
+
+{% block title %}চেকআউট | বইঘর{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <h2 class="mb-4">অর্ডার সম্পন্ন করো</h2>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-warning">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+
+    <div class="row g-4">
+        <div class="col-md-7">
+            <form method="POST" class="card card-body">
+                {% csrf_token %}
+
+                <label class="form-label">তোমার নাম</label>
+                <input type="text" name="name"
+                       class="form-control mb-3" required>
+
+                <label class="form-label">ফোন নম্বর</label>
+                <input type="tel" name="phone"
+                       class="form-control mb-3" required>
+
+                <label class="form-label">সম্পূর্ণ ঠিকানা</label>
+                <textarea name="address" rows="3"
+                          class="form-control mb-3" required></textarea>
+
+                <button type="submit" class="btn btn-success">
+                    অর্ডার নিশ্চিত করো
+                </button>
+            </form>
+        </div>
+
+        <div class="col-md-5">
+            <div class="card card-body">
+                <h4>অর্ডারের বিবরণ</h4>
+
+                {% for item in cart_items %}
+                    <p>
+                        {{ item.product.name }} × {{ item.quantity }}
+                        <span class="float-end">৳{{ item.subtotal }}</span>
+                    </p>
+                {% endfor %}
+
+                <hr>
+                <h5>সর্বমোট: ৳{{ total }}</h5>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

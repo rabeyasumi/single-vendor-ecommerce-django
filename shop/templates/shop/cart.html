@@ -1,0 +1,82 @@
+```html
+{% extends 'shop/base.html' %}
+
+{% block title %}শপিং কার্ট | বইঘর{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <h2 class="mb-4">তোমার শপিং কার্ট</h2>
+
+    {% if cart_items %}
+        <div class="table-responsive">
+            <table class="table table-bordered align-middle bg-white">
+                <thead class="table-dark">
+                    <tr>
+                        <th>বই</th>
+                        <th>দাম</th>
+                        <th>পরিমাণ</th>
+                        <th>মোট</th>
+                        <th>অ্যাকশন</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in cart_items %}
+                    <tr>
+                        <td>{{ item.product.name }}</td>
+                        <td>৳{{ item.product.price }}</td>
+                        <td>
+                            <form method="POST"
+                                  action="{% url 'update_cart' item.product.id %}"
+                                  class="d-flex gap-2">
+                                {% csrf_token %}
+                                <input type="number" name="quantity"
+                                       value="{{ item.quantity }}"
+                                       min="1"
+                                       max="{{ item.product.quantity }}"
+                                       class="form-control"
+                                       style="width: 85px;">
+                                <button class="btn btn-sm btn-primary">
+                                    আপডেট
+                                </button>
+                            </form>
+                        </td>
+                        <td>৳{{ item.subtotal }}</td>
+                        <td>
+                            <form method="POST"
+                                  action="{% url 'remove_from_cart' item.product.id %}">
+                                {% csrf_token %}
+                                <button class="btn btn-sm btn-danger">
+                                    Remove
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th colspan="3" class="text-end">সর্বমোট</th>
+                        <th colspan="2">৳{{ total }}</th>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+
+        <a href="{% url 'products' %}" class="btn btn-outline-secondary">
+            আরও বই কিনুন
+        </a>
+        <a href="{% url 'checkout' %}" class="btn btn-success">
+            Checkout
+        </a>
+    {% else %}
+        <div class="text-center py-5">
+            <h4>তোমার কার্ট এখন খালি</h4>
+            <p class="text-muted">পছন্দের বই খুঁজে কার্টে যোগ করো।</p>
+            <a href="{% url 'products' %}" class="btn btn-primary">
+                বই দেখুন
+            </a>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
+```

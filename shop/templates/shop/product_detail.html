@@ -1,0 +1,65 @@
+
+{% extends 'shop/base.html' %}
+
+{% block title %}{{ product.name }} | বইঘর{% endblock %}
+
+{% block content %}
+
+<section class="container py-5">
+    <div class="row g-4 align-items-start">
+
+        <div class="col-12 col-md-5">
+            {% if product.image %}
+            <img src="{{ product.image.url }}"
+                 class="product-detail-image img-fluid rounded"
+                 alt="{{ product.name }}">
+            {% else %}
+            <div class="product-detail-image d-flex align-items-center justify-content-center">
+                <span class="text-muted">ছবি নেই</span>
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="col-12 col-md-7">
+            <p class="text-muted">{{ product.category }}</p>
+
+            <h1>{{ product.name }}</h1>
+
+            <p class="price mt-3">
+                মূল্য: ৳{{ product.price }}
+            </p>
+
+            <h5 class="mt-4">বই সম্পর্কে</h5>
+            <p>{{ product.description|linebreaksbr }}</p>
+
+            {% if product.quantity > 0 %}
+            <p class="text-success">
+                স্টকে আছে — {{ product.quantity }} কপি
+            </p>
+            {% else %}
+            <p class="text-danger">দুঃখিত, বইটি বর্তমানে স্টকে নেই।</p>
+            {% endif %}
+
+            {% if product.quantity > 0 %}
+            <form method="POST" action="{% url 'add_to_cart' product.id %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-success">
+                    কার্টে যোগ করুন
+                </button>
+            </form>
+            {% else %}
+                <button class="btn btn-secondary" disabled>
+                    স্টক শেষ
+                </button>
+            {% endif %}
+
+            <a href="{% url 'products' %}"
+               class="btn btn-outline-secondary mt-3">
+                সব বইয়ে ফিরে যান
+            </a>
+        </div>
+
+    </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,20 @@
+
+{% extends 'shop/base.html' %}
+
+{% block title %}অর্ডার সফল | বইঘর{% endblock %}
+
+{% block content %}
+<div class="container py-5 text-center">
+    <h2 class="text-success">তোমার অর্ডার সফল হয়েছে!</h2>
+
+    <p class="mt-3">
+        বইঘর থেকে কেনাকাটা করার জন্য ধন্যবাদ।
+    </p>
+
+    <h4>অর্ডারের মোট: ৳{{ total }}</h4>
+
+    <a href="{% url 'products' %}" class="btn btn-primary mt-3">
+        আরও বই কিনুন
+    </a>
+</div>
+{% endblock %}
